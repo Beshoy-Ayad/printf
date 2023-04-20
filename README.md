@@ -1,1 +1,1 @@
-prinf f progect collaborated with Shaymaa Hafez Ebrahiem. and Beshoy Ayad.
+prinf f project collaborated with Shaymaa Hafez Ebrahiem and Beshoy Ayad.

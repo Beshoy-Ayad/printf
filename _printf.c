@@ -54,20 +54,14 @@ int _printf(const char *format, ...)
 			switch (format[i])
 			{
 				case 'c':
-				{
 					count += _printLettler(va_arg(args, int));
 					break;
-				}
 				case 's':
-				{
 					count += _printWord(va_arg(args, char *));
 					break;
-				}
 				case '%':
-				{
 					count += _printLettler('%');
 					break;
-				}
 				default:
 					return (-1);
 			}

@@ -31,6 +31,43 @@ int _printWord(char *s)
 }
 
 /**
+ * _printInt - prints an integer
+ * @n: the integer
+ * Return: number of characters printed
+ */
+int _printInt(int n)
+{
+	int count = 0;
+	int digit;
+	int sign = 1;
+
+	if (n < 0)
+	{
+		sign = -1;
+		n = -n;
+		count += _printLettler('-');
+	}
+
+	if (n == 0)
+	{
+		count += _printLettler('0');
+		return (count);
+	}
+
+	digit = n % 10;
+	n = n / 10;
+
+	if (n > 0)
+	{
+		count += _printInt(n);
+	}
+
+	count += _printLettler(digit + '0');
+
+	return (count * sign);
+}
+
+/**
  * _printf - prints the needs
  * @format: the format string
  * Return: number of letters printed

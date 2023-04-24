@@ -1,3 +1,4 @@
+#include "main.h"
 #include <stdarg.h>
 #include <stdio.h>
 
@@ -41,7 +42,7 @@ int print_i(va_list args)
 }
 
 /**
- * _printf - prints formatted output
+ * _printf_handler - prints formatted output
  * @format: string with format specifiers
  * Return: number of characters printed
  */

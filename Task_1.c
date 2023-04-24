@@ -1,50 +1,84 @@
-#include "main.h"
-/**
- * handle_printMe - Prints an argument based on its type
- * @fmt: Formatted string in which to print the arguments.
- * @list: List of arguments to be printed.
- * @ind: ind.
- * @buffer: Buffer array to handle print.
- * @flags: Calculates active flags
- * @width: get width.
- * @precision: Precision specification
- * @size: Size specifier
- * Return: 1 or 2;
- */
-int handle_printMe(const char *fmt, int *ind, va_list list, char buffer[],
-		int flags, int width, int precision, int size)
-{
-	int i, unknow_len = 0, printed_chars = -1;
-	fmt_t fmt_types[] = {
-		{'c', print_char}, {'s', print_string}, {'%', print_percent},
-		{'i', print_int}, {'d', print_int}, {'b', print_binary},
-		{'u', print_unsigned}, {'o', print_octal}, {'x', print_hexadecimal},
-		{'X', print_hexa_upper}, {'p', print_pointer}, {'S', print_non_printable},
-		{'r', print_reverse}, {'R', print_rot13string}, {'\0', NULL}
-	};
-	for (i = 0; fmt_types[i].fmt != '\0'; i++)
-		if (fmt[*ind] == fmt_types[i].fmt)
-			return (fmt_types[i].fn(list, buffer, flags, width, precision, size));
+#include <stdarg.h>
+#include <stdio.h>
 
-	if (fmt_types[i].fmt == '\0')
+/**
+ * print_d - prints an integer as a decimal
+ * @args: list of arguments
+ * Return: number of characters printed
+ */
+int print_d(va_list args)
+{
+	int n = va_arg(args, int);
+	int count = 0;
+	int div = 1;
+
+	if (n < 0)
 	{
-		if (fmt[*ind] == '\0')
-			return (-1);
-		unknow_len += write(1, "%%", 1);
-		if (fmt[*ind - 1] == ' ')
-			unknow_len += write(1, " ", 1);
-		else if (width)
-		{
-			--(*ind);
-			while (fmt[*ind] != ' ' && fmt[*ind] != '%')
-				--(*ind);
-			if (fmt[*ind] == ' ')
-				--(*ind);
-			return (1);
-		}
-		unknow_len += write(1, &fmt[*ind], 1);
-		return (unknow_len);
+		putchar('-');
+		count++;
+		n = -n;
 	}
-	return (printed_chars);
+	while (n / div > 9)
+		div *= 10;
+	while (div != 0)
+	{
+		putchar('0' + n / div);
+		count++;
+		n %= div;
+		div /= 10;
+	}
+	return (count);
+}
+
+/**
+ * print_i - prints an integer as a decimal
+ * @args: list of arguments
+ * Return: number of characters printed
+ */
+int print_i(va_list args)
+{
+	return (print_d(args));
+}
+
+/**
+ * _printf - prints formatted output
+ * @format: string with format specifiers
+ * Return: number of characters printed
+ */
+int _printf_handler(const char *format, ...)
+{
+	va_list args;
+	int i = 0;
+	int count = 0;
+
+	va_start(args, format);
+	while (format[i])
+	{
+		if (format[i] == '%')
+		{
+			i++;
+			switch (format[i])
+			{
+				case 'd':
+					count += print_d(args);
+					break;
+				case 'i':
+					count += print_i(args);
+					break;
+				default:
+					putchar('%');
+					putchar(format[i]);
+					count += 2;
+			}
+		}
+		else
+		{
+			putchar(format[i]);
+			count++;
+		}
+		i++;
+	}
+	va_end(args);
+	return (count);
 }
 

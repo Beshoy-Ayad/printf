@@ -8,6 +8,8 @@
 
 int _printf(const char *format, ...);
 
-int _printf_handler(const char *format, ...);
+int _printLettler(char c);
+int _printWord(char *s);
+int _printInt(int n);
 
 #endif

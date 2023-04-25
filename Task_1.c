@@ -1,57 +1,79 @@
 #include "main.h"
-#include <stdarg.h>
-#include <stdio.h>
 
 /**
- * print_d - prints an integer as a decimal
- * @args: list of arguments
+ * _printLettler - writes a letter
+ * @c: the letter
+ * Return: 1
+ */
+int _printLettler(char c)
+{
+	return (write(1, &c, 1));
+}
+
+/**
+ * _printWord - prints a word
+ * @s: the letters
+ * Return: numbers of letters
+ */
+int _printWord(char *s)
+{
+	int i = 0;
+	if (s == NULL)
+		s = "(null)";
+	while (s[i])
+	{
+		_printLettler(s[i]);
+		i++;
+	}
+	return (i);
+}
+
+/**
+ * _printInt - prints an integer
+ * @n: the integer
  * Return: number of characters printed
  */
-int print_d(va_list args)
+int _printInt(int n)
 {
-	int n = va_arg(args, int);
 	int count = 0;
-	int div = 1;
-
+	int digit;
+	int sign = 1;
+	
 	if (n < 0)
 	{
-		putchar('-');
-		count++;
+		sign = -1;
 		n = -n;
+		count += _printLettler('-');
 	}
-	while (n / div > 9)
-		div *= 10;
-	while (div != 0)
+	if (n == 0)
 	{
-		putchar('0' + n / div);
-		count++;
-		n %= div;
-		div /= 10;
+		count += _printLettler('0');
+		return (count);
 	}
-	return (count);
+	digit = n % 10;
+	n = n / 10;
+	if (n > 0)
+	{
+		count += _printInt(n);
+	}
+	count += _printLettler(digit + '0');
+	return (count * sign);
 }
 
-/**
- * print_i - prints an integer as a decimal
- * @args: list of arguments
- * Return: number of characters printed
- */
-int print_i(va_list args)
-{
-	return (print_d(args));
-}
 
 /**
- * _printf_handler - prints formatted output
- * @format: string with format specifiers
- * Return: number of characters printed
+ * _printf - prints the needs
+ * @format: the format string
+ * Return: number of letters printed
  */
-int _printf_handler(const char *format, ...)
+int _printf(const char *format, ...)
 {
 	va_list args;
 	int i = 0;
 	int count = 0;
-
+	
+	if (format == NULL)
+		return (-1);
 	va_start(args, format);
 	while (format[i])
 	{
@@ -61,21 +83,16 @@ int _printf_handler(const char *format, ...)
 			switch (format[i])
 			{
 				case 'd':
-					count += print_d(args);
-					break;
 				case 'i':
-					count += print_i(args);
+					count += _printInt(va_arg(args, int));
 					break;
 				default:
-					putchar('%');
-					putchar(format[i]);
-					count += 2;
+					return (-1);
 			}
 		}
 		else
 		{
-			putchar(format[i]);
-			count++;
+			count += _printLettler(format[i]);
 		}
 		i++;
 	}

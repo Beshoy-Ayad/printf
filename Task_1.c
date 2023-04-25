@@ -18,6 +18,7 @@ int _printLettler(char c)
 int _printWord(char *s)
 {
 	int i = 0;
+
 	if (s == NULL)
 		s = "(null)";
 	while (s[i])
@@ -38,7 +39,7 @@ int _printInt(int n)
 	int count = 0;
 	int digit;
 	int sign = 1;
-	
+
 	if (n < 0)
 	{
 		sign = -1;
@@ -71,7 +72,7 @@ int _printf(const char *format, ...)
 	va_list args;
 	int i = 0;
 	int count = 0;
-	
+
 	if (format == NULL)
 		return (-1);
 	va_start(args, format);

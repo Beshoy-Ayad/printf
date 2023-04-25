@@ -3,7 +3,7 @@
 /**
  * _printLettler - writes a letter
  * @c: the letter
- * Return: 1
+ * Return: Always  1
  */
 int _printLettler(char c)
 {

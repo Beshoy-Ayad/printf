@@ -9,7 +9,9 @@ int _printLettler(char c)
 {
 	return (write(1, &c, 1));
 }
+
 /**
+ *
  * _printWord - prints a word
  * @s: the letters
  * Return: numbers of letters
@@ -19,12 +21,13 @@ int _printWord(char *s)
 	int i = 0;
 
 	if (s == NULL)
-	s = "(null)";
-
+	{
+		s = "(null)";
+	}
 	while (s[i])
 	{
-	_printLettler(s[i]);
-	i++;
+		_printLettler(s[i]);
+		i++;
 	}
 
 	return (i);
@@ -35,6 +38,7 @@ int _printWord(char *s)
  * @n: the integer
  * Return: number of characters printed
  */
+
 int _printInt(int n)
 {
 	int count = 0;
@@ -98,6 +102,12 @@ int _printf(const char *format, ...)
 					break;
 				case '%':
 					count += _printLettler('%');
+					break;
+				case 'd':
+					count += _printInt(va_arg(args, int));
+					break;
+				case 'i':
+					count += _printInt(va_arg(args, int));
 					break;
 				default:
 					return (-1);

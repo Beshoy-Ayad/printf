@@ -83,7 +83,18 @@ int _printf(const char *format, ...)
 			i++;
 			switch (format[i])
 			{
+				case 'c':
+					count += _printLettler(va_arg(args, int));
+					break;
+				case 's':
+					count += _printWord(va_arg(args, char *));
+					break;
+				case '%':
+					count += _printLettler('%');
+					break;
 				case 'd':
+					count += _printInt(va_arg(args, int));
+					break;
 				case 'i':
 					count += _printInt(va_arg(args, int));
 					break;

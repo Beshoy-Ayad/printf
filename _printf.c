@@ -11,7 +11,6 @@ int _printLettler(char c)
 }
 
 /**
- *
  * _printWord - prints a word
  * @s: the letters
  * Return: numbers of letters
@@ -86,7 +85,6 @@ int _printf(const char *format, ...)
 		return (-1);
 
 	va_start(args, format);
-
 	while (format[i])
 	{
 		if (format[i] == '%')
@@ -114,13 +112,9 @@ int _printf(const char *format, ...)
 			}
 		}
 		else
-		{
 			count += _printLettler(format[i]);
-		}
 		i++;
 	}
-
 	va_end(args);
-
 	return (count);
 }

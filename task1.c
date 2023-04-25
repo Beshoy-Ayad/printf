@@ -103,9 +103,7 @@ int _printf(const char *format, ...)
 			}
 		}
 		else
-		{
 			count += _printLettler(format[i]);
-		}
 		i++;
 	}
 	va_end(args);
